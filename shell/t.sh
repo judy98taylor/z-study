@@ -32,8 +32,8 @@ if [[ $status =~ "git add" ]]; then
   git commit -m "save$(date +%Y%m%d)"
   git pull
   git push
-  echo 'push ok'
+  echo -e "\033[42;37m push ok \033[0m"
 else 
-  echo '!need git add'
+  echo -e “\033[41;37m !need git add \033[0m”
 fi
 
