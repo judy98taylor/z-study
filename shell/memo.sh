@@ -15,9 +15,10 @@ set -e
 # echo ${PATH}
 # echo ${HOME}
 
-# 执行的命令
+# 执行的命令 
 echo '$0' $0
-# 执行命令 接收到的全部参数
+# 执行命令 接收到的全部参数  
+# $@ 與 "$@" 『 ./script one "a   to   b" 』$@ a   to   b
 echo '$@' $@
 # 第一个参数
 echo '$1' $1
@@ -90,3 +91,37 @@ fi
 
 # if [ -n $ARGS  ]
 # 不管传不传参数，总会进入if里面。 原因：因为不加“”时该if语句等效于if [ -n ]，shell 会把它当成if [ str1 ]来处理，-n自然不为空，所以为正
+
+
+# 当前时间
+# date "+%Y-%m-%d %H:%M:%S"
+# 当前分支名称
+# git symbolic-ref HEAD 2>/dev/null | cut -d"/" -f 3
+# datetime=$(date "+%Y-%m-%d %H:%M:%S")
+datetime=$(date "+%Y%m%d %H:%M:%S")
+# git status
+# git add --all
+# git commit -m "save"
+# git pull
+# git push
+# git checkout -b "dev$(date +%Y%m%d)"
+# git checkout -b 'feature-'${NAME}
+# ""字符串！
+# status="git status"
+# ``执行命令
+status=`git status`
+
+# >> ；如果文件不存在，将创建新的文件，并将数据送至此文件；如果文件存在，则将数据添加在文件后面
+# >  ；如果文件不存在，同上，如果文件存在，先将文件清空，然后将数据填入此文件
+# echo $status > log.txt
+# open log.txt
+
+if [[ $status =~ "git add" ]]; then
+  git add --all
+  git commit -m "save$(date +%Y%m%d)"
+  git pull
+  git push
+  echo -e "\033[42;37m push ok \033[0m"
+else 
+  echo -e “\033[41;37m !need git add \033[0m”
+fi
